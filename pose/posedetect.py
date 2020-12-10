@@ -9,7 +9,7 @@ parser.add_argument("--device", default="cpu", help="Device to inference on")
 parser.add_argument("--video_file", default="sample_video.mp4", help="Input Video")
 
 args = parser.parse_args()
-
+#model load
 protoFile = "pose_deploy_linevec.prototxt"
 weightsFile = "pose_iter_440000.caffemodel"
 nPoints = 18
@@ -17,12 +17,14 @@ POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[0,14],[0,15],[14,16],[
 
 threshold = 0.1
 neck=200
+#set webcam
 cap = cv2.VideoCapture(0)
 hasFrame, frame = cap.read()
-
+#make ouput video
 vid_writer = cv2.VideoWriter('output.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame.shape[1],frame.shape[0]))
 
 net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
+
 if args.device == "cpu":
     net.setPreferableBackend(cv2.dnn.DNN_TARGET_CPU)
     print("Using CPU device")
@@ -33,6 +35,7 @@ elif args.device == "gpu":
 
 while cv2.waitKey(1) < 0:
     t = time.time()
+    #get webcam video
     hasFrame, frame = cap.read()
     frameCopy = np.copy(frame)
     if not hasFrame:
@@ -41,7 +44,7 @@ while cv2.waitKey(1) < 0:
 
     frameWidth = frame.shape[1]
     frameHeight = frame.shape[0]
-
+    #preprocess captured image
     inpBlob = cv2.dnn.blobFromImage(cv2.resize(frame,(300,300)), 1.0 / 255, (300,300),
                               (0, 0, 0), swapRB=False, crop=False)
     net.setInput(inpBlob)
@@ -81,7 +84,8 @@ while cv2.waitKey(1) < 0:
             cv2.line(frame, points[partA], points[partB], (0, 255, 255), 3, lineType=cv2.LINE_AA)
             cv2.circle(frame, points[partA], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
             cv2.circle(frame, points[partB], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
-    
+            
+    #Detect neck movement
     if points[0] and points[1]:
         d.append(points[0][0]-points[1][0])
         d.append(points[0][1]-points[1][1])
@@ -93,6 +97,7 @@ while cv2.waitKey(1) < 0:
         cv2.putText(frame, "head up", (50, 100), cv2.FONT_HERSHEY_COMPLEX, .6, (255, 50, 0), 2, lineType=cv2.LINE_AA)
     if neck < 140:
         cv2.putText(frame, "head down", (50, 100), cv2.FONT_HERSHEY_COMPLEX, .6, (255, 50, 0), 2, lineType=cv2.LINE_AA)
+        
     cv2.putText(frame, "time taken = {:.2f} sec".format(time.time() - t), (50, 50), cv2.FONT_HERSHEY_COMPLEX, .6, (255, 50, 0), 2, lineType=cv2.LINE_AA)
     cv2.imshow('Output-Skeleton', frame)
 
