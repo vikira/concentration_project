@@ -128,9 +128,9 @@ cv2.rectangle(canvas, (7, (i * 35) + 5), (w, (i * 35) + 35), (0, 0, 255), -1)
 cv2.putText(canvas, text, (10, (i * 35) + 23), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 2)
 ```
 
-2. OpenCV dlib 68 face landmark를 이용한 얼굴 인식
+2. OpenCV dlib 68 face landmark를 이용한 얼굴 인식<br>
 dlib은 얼굴과 관련한 알고리즘들을 편하게 사용할 수 있는 라이브러리<br>
-사용 모델: shape_predictor_68_face_landmarks.dat<br>
+사용 모델: shape_predictor_68_face_landmarks.dat <br>
 
 이것을 통해 찡그림, 하품, 졸림, 지겨움 등 표정 파악<br>
 ex) 눈과 눈썹 point 사이 거리 추출 하여 찡그림 인식
