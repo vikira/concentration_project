@@ -135,8 +135,6 @@ https://wwww.medium.com/@stepanfilonov/tracking-your-eyes-with-python-3952e66194
 행동인식
 https://www.learnopencv.com/deep-learning-based-human-pose-estimation-using-opencv-cpp-python/ <br>
 
-
-## 5. License 
 ## 프로젝트 진행 과정
 - [x] 주제선정 및 내용구체화
 - [x] 기술조사 및 코드리뷰
