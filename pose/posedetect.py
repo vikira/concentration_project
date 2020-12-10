@@ -10,25 +10,12 @@ parser.add_argument("--video_file", default="sample_video.mp4", help="Input Vide
 
 args = parser.parse_args()
 
-MODE = "COCO"
+protoFile = "pose_deploy_linevec.prototxt"
+weightsFile = "pose_iter_440000.caffemodel"
+nPoints = 18
+POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[0,14],[0,15],[14,16],[15,17]]
 
-if MODE is "COCO":
-    protoFile = "pose_deploy_linevec.prototxt"
-    weightsFile = "pose_iter_440000.caffemodel"
-    nPoints = 18
-    POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[0,14],[0,15],[14,16],[15,17]]
-
-elif MODE is "MPI" :
-    protoFile = "pose/mpi/pose_deploy_linevec_faster_4_stages.prototxt"
-    weightsFile = "pose/mpi/pose_iter_160000.caffemodel"
-    nPoints = 15
-    POSE_PAIRS = [[0,1], [1,2], [2,3], [3,4], [1,5], [5,6], [6,7], [1,14], [14,8], [8,9], [9,10], [14,11], [11,12], [12,13] ]
-
-
-inWidth = 368
-inHeight = 368
 threshold = 0.1
-iter=0
 neck=200
 cap = cv2.VideoCapture(0)
 hasFrame, frame = cap.read()
@@ -56,7 +43,7 @@ while cv2.waitKey(1) < 0:
     frameHeight = frame.shape[0]
 
     inpBlob = cv2.dnn.blobFromImage(cv2.resize(frame,(300,300)), 1.0 / 255, (300,300),
-                              (104.0,177.0, 123.0), swapRB=False, crop=False)
+                              (0, 0, 0), swapRB=False, crop=False)
     net.setInput(inpBlob)
     output = net.forward()
 
@@ -107,8 +94,6 @@ while cv2.waitKey(1) < 0:
     if neck < 140:
         cv2.putText(frame, "head down", (50, 100), cv2.FONT_HERSHEY_COMPLEX, .6, (255, 50, 0), 2, lineType=cv2.LINE_AA)
     cv2.putText(frame, "time taken = {:.2f} sec".format(time.time() - t), (50, 50), cv2.FONT_HERSHEY_COMPLEX, .6, (255, 50, 0), 2, lineType=cv2.LINE_AA)
-    # cv2.putText(frame, "OpenPose using OpenCV", (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 50, 0), 2, lineType=cv2.LINE_AA)
-    # cv2.imshow('Output-Keypoints', frameCopy)
     cv2.imshow('Output-Skeleton', frame)
 
     vid_writer.write(frame)
