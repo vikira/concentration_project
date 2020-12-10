@@ -49,12 +49,30 @@ ex) 졸음 : 고개를 숙인 상태, 눈을 장시간 감고있는 상태
 ex) 눈과 눈썹 point 사이 거리 추출 하여 찡그림 인식
 
 ### 반응파악모듈 -행동인식
-1. openCV coco모델을 통해 얼굴과 목, 어깨움직임 파악
-ex) 얼굴 뒤로 젖히기, 고개 갸웃 하기, 끄덕임
-2.  이미지 학습을 통한 자세 구별
-ex)손으로 머리 짚기, 턱 괴기
+#### OpenPose
+OpenPose : Caffe와 OpenCV를 기반으로 구성된 손, 얼굴 포함 몸의 움직임을 추적해주는 API
+https://github.com/CMU-Perceptual-Computing-Lab/openpose
+
+사용모델
+..\openpose-master\models\pose\coco 폴더의 COCO모델 사용
+- pose_deploy_linevec.prototxt
+- pose_iter_440000.caffemodel<br>
+
+COCO모델에서 제공하는 POINT
+COCO Output Format Nose – 0, Neck – 1, Right Shoulder – 2, Right Elbow – 3, Right Wrist – 4, Left Shoulder – 5, Left Elbow – 6, Left Wrist – 7, Right Hip – 8, Right Knee – 9, Right Ankle – 10, Left Hip – 11, Left Knee – 12, LAnkle – 13, Right Eye – 14, Left Eye – 15, Right Ear – 16, Left Ear – 17, Background – 18<br>
+우리 프로젝트에서 상체의 움직임중 끄덕임등 목과 머리의 움직임을 파악하기 위해서 Nose, Neck, Right Eye, Left Eye, Right Ear, Left Ear 사용.<br>
+Pose pair중 필요한 상체 연결만 남김.<br>
+POSE_PAIRS = [[1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[0,14],[0,15],[14,16],[15,17]]
+<div>
+  <img width="259" alt="화면 캡처 2020-12-10 205622" src="https://user-images.githubusercontent.com/63234878/101769370-35ab0e00-3b2a-11eb-85e2-72b065f7d5ee.png">
+</div><br>
+
+끄덕임 검출
+Nose(0)과 Neck(1)이 같이 검출되었을 때 그 포인트 사이의 거리를 계산하고, 머리가 중립 상태일 때의 바운더리를 설정하여 그 이하, 이상으로 변화하면 움직임을 검출
+
 
 ## 4. reference
+https://www.learnopencv.com/deep-learning-based-human-pose-estimation-using-opencv-cpp-python/ <br>
 
 
 ## 5. License 
