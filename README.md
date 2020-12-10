@@ -43,6 +43,31 @@ ex) 졸음 : 고개를 숙인 상태, 눈을 장시간 감고있는 상태
 
 ## 3. 기술
 ### 반응파악모듈 -시선인식
+1)Gaze Tracking API: github.com/antoinelame/GazeTracking
+
+사용모델
+dlib shape_predictor_68_face_landmarks.dat
+
+- 왼쪽 눈동자의 좌표
+```
+gaze.pupil_left_coords()
+```
+- 오른쪽 눈동자의 좌표
+```
+gaze.pupil_right_coords()
+```
+- 눈동자의 방향
+```
+gaze.is_left()
+gaze.is_right()
+gaze.is_center()
+```
+- 눈 감음
+```
+gaze.is_blinking()
+```
+
+2)콘텐츠 검출 API: github.com/nicewoong/pyTextGotcha
 
 ### 반응파악모듈 -표정인식
 1. OpenCV dlib -  68 face landmark로 찡그림, 하품, 졸림, 지겨움 등 표정 파악
@@ -72,6 +97,12 @@ Nose(0)과 Neck(1)이 같이 검출되었을 때 그 포인트 사이의 거리�
 
 
 ## 4. reference
+시선인식
+https://wwww.medium.com/@stepanfilonov/tracking-your-eyes-with-python-3952e66194a6
+
+표정인식 
+
+행동인식
 https://www.learnopencv.com/deep-learning-based-human-pose-estimation-using-opencv-cpp-python/ <br>
 
 
