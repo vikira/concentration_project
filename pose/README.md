@@ -1,6 +1,6 @@
 OpenPose : Caffe와 OpenCV를 기반으로 구성된 손, 얼굴 포함 몸의 움직임을 추적해주는 API
 
-1. 아래의 깃허브에서 오픈 포즈 다운로드
+1. 아래의 깃허브에서 오픈 포즈 다운로드<br>
 https://github.com/CMU-Perceptual-Computing-Lab/openpose
 
 2. getModels로 모델을 다운로드
