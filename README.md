@@ -45,15 +45,12 @@ ex) 졸음 : 고개를 숙인 상태, 눈을 장시간 감고있는 상태
 ### 반응파악모듈 -시선인식
 1)Gaze Tracking API: github.com/antoinelame/GazeTracking
 
-사용모델
+사용모델<br>
 dlib shape_predictor_68_face_landmarks.dat
 
-- 왼쪽 눈동자의 좌표
+- 왼쪽,오른쪽 눈동자의 좌표
 ```
 gaze.pupil_left_coords()
-```
-- 오른쪽 눈동자의 좌표
-```
 gaze.pupil_right_coords()
 ```
 - 눈동자의 방향
@@ -67,7 +64,7 @@ gaze.is_center()
 gaze.is_blinking()
 ```
 
-2)콘텐츠 검출 API: github.com/nicewoong/pyTextGotcha
+2)콘텐츠 검출 API: github.com/nicewoong/pyTextGotcha<br>
 이미지 전처리를 위해 다음과 같은 다섯 단계를 거친다.
 - gray scale 적용
 ```
@@ -86,7 +83,6 @@ image_threshold = cv2.adaptiveThreshold(copy, 255, cv2.ADAPTIVE_THRESH_MEAN_C, c
 int threshold; #선 추출 정확도
 int minLength; #추출할 선의 길이
 int lineGap; #이 픽셀 이내로 겹치는 선은 제외
-
 
 lines = cv2.HoughLinesP(copy, 1, np.pi / 180, threshold, np.array([]), min_line_length, max_line_gap)
 for line in lines:
