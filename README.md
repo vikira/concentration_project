@@ -92,7 +92,7 @@ for line in lines:
 - Contour영역 잘라내기
 
 ### 반응파악모듈 -표정인식
-1. 머신 러닝기반의 오브젝트 검출 알고리즘 Haar Cascade를 이용한 표정인식
+1. 머신 러닝기반의 오브젝트 검출 알고리즘 Haar Cascade를 이용한 표정인식<br>
 사용 모델: haarcascade_frontalface_default.xml
 
 - 얼굴인식 XML load
