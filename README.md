@@ -68,6 +68,32 @@ gaze.is_blinking()
 ```
 
 2)콘텐츠 검출 API: github.com/nicewoong/pyTextGotcha
+이미지 전처리를 위해 다음과 같은 다섯 단계를 거친다.
+- gray scale 적용
+```
+def gray_scale(img)
+```
+- Morph Gradient, Morph Close 적용
+```
+def gradient(img_gray)
+```
+- Adaptive Threshold 적용 
+```
+image_threshold = cv2.adaptiveThreshold(copy, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV)
+```
+- Long Line Removal 적용
+```
+int threshold; #선 추출 정확도
+int minLength; #추출할 선의 길이
+int lineGap; #이 픽셀 이내로 겹치는 선은 제외
+
+
+lines = cv2.HoughLinesP(copy, 1, np.pi / 180, threshold, np.array([]), min_line_length, max_line_gap)
+for line in lines:
+	x1, y1, x2, y2 = line[0]  # end point of line
+    	cv2.line(copy, (x1, y1), (x2, y2), (0, 0, 0), 2)
+```
+- Contour영역 잘라내기
 
 ### 반응파악모듈 -표정인식
 1. OpenCV dlib -  68 face landmark로 찡그림, 하품, 졸림, 지겨움 등 표정 파악
