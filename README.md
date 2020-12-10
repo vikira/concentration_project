@@ -96,37 +96,37 @@ for line in lines:
 사용 모델: haarcascade_frontalface_default.xml
 
 - 얼굴인식 XML load
-'''
+```
 face_detection = cv2.CascadeClassifier('files/haarcascade_frontalface_default.xml')
-'''
+```
 - 7가지의 emotion으로 분류
-'''
+```
 EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
-'''
+```
 
 - 웹캠을 통한 비디오 사용 / 동영상으로 부터 이미지 캡쳐
-'''
+```
 camera = cv2.VideoCapture(0)
 ret, frame = camera.read()
-'''
+```
 
 - 얼굴인식
-'''
+```
 faces = face_detection.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30,30))
-'''
+```
 
 - emotion 추측
-'''
+```
 preds = emotion_classifier.predict(roi)[0]
 emotion_probability = np.max(preds)
 label = EMOTIONS[preds.argmax()]
-'''
+```
 
 - 화면에 얼굴 형태와 표정인식 결과값 출력
-'''
+```
 cv2.rectangle(canvas, (7, (i * 35) + 5), (w, (i * 35) + 35), (0, 0, 255), -1)
 cv2.putText(canvas, text, (10, (i * 35) + 23), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 2)
-'''
+```
 
 2. OpenCV dlib -  68 face landmark로 찡그림, 하품, 졸림, 지겨움 등 표정 파악
 ex) 눈과 눈썹 point 사이 거리 추출 하여 찡그림 인식
